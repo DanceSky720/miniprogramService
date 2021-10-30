@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自由音乐注册</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+    </script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        $(document).ready(function () {
+            var msg = $('#msg')
+
+            $('#form').submit(function () {
+                var email = $('#email').val();
+                var password = $('#password').val();
+                var name = $('#name').val();
+                if (email != "" && password != "" && name != "") {
+                    $.ajax({
+                        url: "http://37104q568t.qicp.vip/register",
+                        data: {
+                            email: email,
+                            password: password,
+                            name: name
+                        },
+                        type: "get",
+                        dataType: "json",
+                        success: function (data) {
+                           
+                            alert(data.state)
+                             msg.text(data.state)
+                           
+                        }
+                    });
+                } else {
+                    $('.form-group').addClass("has-error")
+
+                    alert("请填写必要数据!")
+                }
+            })
+        });
+    </script>
+</head>
+
+<body class="container">
+
+
+    <div class="container">
+
+        <div class=".col-xs-3 .col-xs-offset-3">
+
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        </button>
+                        <a class="navbar-brand" href="#">Brand</a>
+                    </div>
+
+                </div>
+            </nav>
+
+
+
+            <form id="form">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">邮箱</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">密码</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">昵称</label>
+                    <input type="text" class="form-control" id="name" placeholder="Name">
+                </div>
+
+                <p id="msg">message</p>
+                <button id="submit" type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
+
+
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

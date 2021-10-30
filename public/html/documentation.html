@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Documentation</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+    </script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        body {
+            padding: 70px 0;
+        }
+
+        h2 {
+            margin-top: 70px;
+            margin-bottom: 50px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app" class="container">
+
+      
+        <h1 class="text-center">文档</h1>
+
+        <div class="container-fluid">
+            <nav class="navbar navbar-default navbar-fixed-top" style="background: #0080FF;">
+            </nav>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-3" id="links">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                        索引
+                    </a>
+                    <a class="list-group-item" v-for="link in links" href="#{{link.id}}">
+                        {{ link.text }}
+                    </a>
+
+
+                </div>
+            </div>
+
+
+            <div class="col-md-9" id="documentation">
+
+                <div v-for="item in documentations">
+                    <h2 id="{{item.id}}">{{item.title}}</h2>
+                    <h4>接口说明 :</h4>
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td><strong>接口用途</strong> : {{item.interfacepurpose}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>接口地址</strong> : {{item.interfaceaddress}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>返回格式</strong> : json</td>
+                        </tr>
+                        <tr>
+                            <td><strong>请求方式</strong> : {{item.requestmethod}}</td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>请求事例</strong> : </td>
+                        </tr>
+
+                    </table>
+
+
+                    <h4>请求参数说明:</h4>
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>必填</th>
+                            <th>说明</th>
+                        </tr>
+                        <tr v-for="p in item.parameter">
+                            <td><strong>{{p.p1}}</strong></td>
+                            <td>{{p.p2}}</td>
+                            <td>{{p.p3}}</td>
+                            <td>{{p.p4}}</td>
+                        </tr>
+
+
+                    </table>
+                    <h4>返回JSON示例:</h4>
+
+                    <textarea style="font-size: large;" class="form-control " rows="5">
+
+                           {{item.example}}
+                        </textarea>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+</body>
+<script>
+    var documentation = new Vue({
+        el: '#documentation',
+        data: {
+            documentations: [{
+                    title: "用户登录",
+
+                    interfacepurpose: "用户登录",
+                    interfaceaddress: "/login",
+                    requestmethod: "post",
+                    parameter: [{
+                            p1: "email",
+                            p2: "String",
+                            p3: "是",
+                            p4: "登录的邮箱"
+                        },
+                        {
+                            p1: "password",
+                            p2: "String",
+                            p3: "是",
+                            p4: "密码"
+                        },
+
+                    ],
+                    example: ''
+                },
+
+                {
+                    title: "用户注册",
+
+                    interfacepurpose: "用户注册(已包含邮箱检查)",
+                    interfaceaddress: "/register",
+                    requestmethod: "post",
+                    parameter: [{
+                            p1: "email",
+                            p2: "String",
+                            p3: "是",
+                            p4: "注册使用的邮箱"
+                        },
+                        {
+                            p1: "password",
+                            p2: "String",
+                            p3: "是",
+                            p4: "密码"
+                        }, {
+                            p1: "name",
+                            p2: "String",
+                            p3: "是",
+                            p4: "昵称"
+                        },
+
+                    ],
+                    example: ''
+                },
+                {
+                    title: "注册邮箱检查",
+
+                    interfacepurpose: "检查邮箱是否已注册",
+                    interfaceaddress: "/emailCheck",
+                    requestmethod: "get",
+                    parameter: [{
+                        p1: "email",
+                        p2: "String",
+                        p3: "是",
+                        p4: "邮箱"
+                    }],
+                    example: ''
+                },
+
+                {
+                    title: "创建新歌单",
+
+                    interfacepurpose: "创建新歌单",
+                    interfaceaddress: "/createsonglist",
+                    requestmethod: "get",
+                    parameter: [{
+                            p1: "title",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌单名字(标题)"
+                        }, {
+                            p1: "uid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "创建歌单用户的uid"
+                        },
+                        {
+                            p1: "details",
+                            p2: "String",
+                            p3: "否",
+                            p4: "歌单描述"
+                        },
+
+                    ],
+                    example: ''
+                },
+                {
+                    title: "歌单添加音乐",
+
+                    interfacepurpose: "歌单添加音乐",
+                    interfaceaddress: "/listaddmusic",
+                    requestmethod: "get",
+                    parameter: [{
+                            p1: "name",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌曲名"
+                        }, {
+                            p1: "songid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌曲id"
+                        },
+                        {
+                            p1: "url",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌曲网络播放地址"
+                        },
+                        {
+                            p1: "picurl",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌曲图片地址"
+                        },
+                        {
+                            p1: "singer",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌手"
+                        },
+                        {
+                            p1: "listid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌单id"
+                        },
+
+                    ],
+                    example: ''
+                },
+
+                {
+                    title: "获取用户歌单",
+                    interfacepurpose: "获取用户歌单",
+                    interfaceaddress: "/getsonglist",
+                    requestmethod: "get",
+                    parameter: [{
+                            p1: "uid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "用户uid"
+                        },
+
+                    ],
+                    example: ''
+                },
+                {
+                    title: "删除歌单",
+                    interfacepurpose: "删除歌单",
+                    interfaceaddress: "/deletesonglist",
+                    requestmethod: "get",
+                    parameter: [{
+                            p1: "uid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "用户uid"
+                        },
+                        {
+                            p1: "cid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌单id"
+                        },
+
+                    ],
+                    example: ''
+                },
+                {
+                    title: "获取歌单音乐",
+                    interfacepurpose: "获取歌单音乐",
+                    interfaceaddress: "/songlistmusic",
+                    requestmethod: "get",
+                    parameter: [{
+                            p1: "listid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "歌单id"
+                        },
+
+                    ],
+                    example: ''
+                },
+                {
+                    title: "修改用户信息",
+                    interfacepurpose: "修改用户信息",
+                    interfaceaddress: "/updateuser",
+                    requestmethod: "post",
+                    parameter: [{
+                            p1: "name",
+                            p2: "String",
+                            p3: "是",
+                            p4: "昵称"
+                        },
+                        {
+                            p1: "email",
+                            p2: "String",
+                            p3: "是",
+                            p4: "邮箱"
+                        },
+                        {
+                            p1: "password",
+                            p2: "String",
+                            p3: "是",
+                            p4: "密码"
+                        },
+                        {
+                            p1: "avatar",
+                            p2: "String",
+                            p3: "是",
+                            p4: "来自/getavatars"
+                        },
+                        {
+                            p1: "uid",
+                            p2: "String",
+                            p3: "是",
+                            p4: "用户uid"
+                        },
+
+                    ],
+                    example: ''
+                },
+
+            ],
+
+        }
+    })
+
+
+    var links = new Vue({
+        el: '#links',
+        data: {
+            links: [{
+                    text: '登录',
+                },
+                {
+                    text: '注册',
+                }, {
+                    text: '邮箱注册检查'
+                }, {
+                    text: "创建新歌单"
+                },
+                {
+                    text: "歌单添加音乐"
+                },
+                {
+                    text: "获取用户歌单"
+                },
+                {
+                    text: "删除歌单"
+                },
+                {
+                    text: "获取歌单音乐"
+                },
+                {
+                    text: "修改用户信息"
+                },
+            ]
+        }
+    })
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"
+    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous">
+</script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+</script>
+
+</html>
